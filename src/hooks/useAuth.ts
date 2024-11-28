@@ -1,21 +1,57 @@
-import Cookies from "js-cookie"
-import { useState } from "react"
+import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
+import {jwtDecode} from "jwt-decode";
+
+
+interface JwtPayload {
+  Email: string;
+  nameid: string;
+  role: string;
+  nbf: number;
+  exp: number;
+  iat: number;
+  iss: string;
+  aud: string;
+}
 
 export default function useAuth() {
-	const token = Cookies.get("react-template-app-token")
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!token)
+  const token = Cookies.get("react-template-app-token");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!token);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
-	const userLogin = (token: string) => {
-		Cookies.set("react-template-app-token", token)
+  useEffect(() => {
+    if (token) {
+      try {
+        // Decode the JWT
+        const decodedToken: JwtPayload = jwtDecode(token);
 
-		setIsAuthenticated(true)
-	}
+        // Set the user's role from the decoded token
+        setUserRole(decodedToken.role);
+      } catch (error) {
+        console.error("Invalid token:", error);
+        setUserRole(null);
+      }
+    }
+  }, [token]);
 
-	const userLogout = () => {
-		Cookies.remove("react-template-app-token")
+  const userLogin = (token: string) => {
+    Cookies.set("react-template-app-token", token);
+    setIsAuthenticated(true);
 
-		setIsAuthenticated(false)
-	}
+    try {
+      const decodedToken: JwtPayload = jwtDecode(token);
+      setUserRole(decodedToken.role);
+    } catch (error) {
+      console.error("Invalid token during login:", error);
+      setUserRole(null);
+    }
+  };
 
-	return { isAuthenticated, userLogin, userLogout }
+  const userLogout = () => {
+    Cookies.remove("react-template-app-token");
+    setIsAuthenticated(false);
+    setUserRole(null);
+  };
+
+  return { isAuthenticated, userRole, userLogin, userLogout };
 }

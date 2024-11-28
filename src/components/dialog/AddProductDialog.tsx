@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import { toast } from '@/hooks/use-toast';
-import { addNewProduct, getAllProduct } from '@/api/product/index';
+import { addNewProduct } from '@/api/product/index';
 
-import api from '@/api';
+
 import { hideLoader, openLoader } from '@/store/features/loaderSlice';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 
@@ -13,8 +13,10 @@ interface AddProductModel {
   stock: number;
   profitPerItem: number;
 }
-
-const AddProductDialog = () => {
+interface AddProductDialogProps {
+    refetch: () => void; // Add refetch as a prop
+  }
+const AddProductDialog : React.FC<AddProductDialogProps> = ({ refetch }) =>{
   const [isOpen, setIsOpen] = useState(false); // State for controlling dialog visibility
   const [payload, setPayload] = useState<AddProductModel>({
     productName: '',
@@ -30,7 +32,7 @@ const AddProductDialog = () => {
     profitPerItem: 0,
   };
 
-  const {refetch} = getAllProduct.useQuery();
+
 
 
   const { mutate: addProduct } = addNewProduct.useMutation({
@@ -41,8 +43,9 @@ const AddProductDialog = () => {
             description: ('Product'),
         })
       setPayload(initialPayload);
-      refetch(); 
+     
       setIsOpen(false); 
+      refetch();
     },
     onError: (error: any) => {
       console.error('Error', error);

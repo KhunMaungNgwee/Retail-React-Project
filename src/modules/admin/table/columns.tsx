@@ -4,10 +4,9 @@ import { ProductType } from "@/api/product/types";
 
 import { UpdateProductDialog } from "@/components/dialog";
 import DeleteAlertDialog from "@/components/dialog/DeleteAlertDialog";
-import api from "@/api";
 
-// Table columns
-export const columns: ColumnDef<ProductType>[] = [
+
+export const columns= (refetch: () => void): ColumnDef<ProductType>[] => [
   {
     accessorKey: "productName",
     header: "Product Name",
@@ -27,20 +26,16 @@ export const columns: ColumnDef<ProductType>[] = [
     accessorKey: "Action",
     header: "Action",
     cell: ({ row }: { row: { original: ProductType } }) => {
-      const { refetch } = api.product.getAllProduct.useQuery();
-
-      const refetchProducts = () => {
-        refetch();
-      };
+     
 
       return (
         <div className="flex justify-center items-center space-x-4">
-          <UpdateProductDialog
+          <UpdateProductDialog 
             item={row.original}
-            onProductUpdated={refetchProducts}
+            onProductUpdated={refetch}
           />
-          {/* Pass row.original to DeleteAlertDialog */}
-          <DeleteAlertDialog item={row.original} onDeleteProduct={refetchProducts} />
+   
+          <DeleteAlertDialog item={row.original} onDeleteProduct={refetch} />
         </div>
       );
     },

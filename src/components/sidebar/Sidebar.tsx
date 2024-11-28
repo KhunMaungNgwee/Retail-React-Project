@@ -1,7 +1,22 @@
 import { NavLink } from "react-router-dom";
+import { useMemo } from "react";
 import { sidebarData } from "./sideBarData";
+import useAuth from "@/hooks/useAuth"; // Import your custom hook for user authentication and role
 
 const Sidebar = () => {
+  const { userRole } = useAuth(); // Fetch user role using your custom hook
+
+  // Dynamically filter sidebar data based on user role
+  const filteredSidebarData = useMemo(() => {
+    return sidebarData.filter((item) => {
+      // Exclude "/admin" route if the user is not an admin
+      if (item.routerNames.includes("/admin") && userRole !== "admin") {
+        return false;
+      }
+      return true;
+    });
+  }, [userRole]);
+
   return (
     <>
       <aside className="w-3/12 bg-[#211636] shadow-lg h-screen fixed top-0 left-0 min-w-[270px] py-6 px-4 font-[sans-serif] flex flex-col overflow-hidden hidden lg:block">
@@ -10,7 +25,7 @@ const Sidebar = () => {
             <img
               src="/src/assets/imges/copy.jpg"
               className="w-12 h-12 p-1 rounded-full border-2 border-gray-300"
-              alt=""
+              alt="User Avatar"
             />
           </div>
           <div className="ml-6">
@@ -20,7 +35,7 @@ const Sidebar = () => {
         </div>
         <hr className="border-gray-500 my-8" />
         <ul className="px-3">
-          {sidebarData.map((item) => (
+          {filteredSidebarData.map((item) => (
             <NavLink
               to={item.routerNames[0]}
               key={item.name}

@@ -1,6 +1,6 @@
 import { AiOutlineDelete } from "react-icons/ai";
 
-import { deleteProduct, getAllProduct } from "@/api/product";
+import { deleteProduct } from "@/api/product";
 import { toast } from "@/hooks/use-toast";
 import { ProductType } from "@/api/product/types";
 import React from "react";
@@ -8,8 +8,8 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { hideLoader, openLoader } from "@/store/features/loaderSlice";
 
 interface DeleteProductDialogProps {
-  item: ProductType; // Item passed from parent
-  onDeleteProduct: () => void; // Function to refetch products after deletion
+  item: ProductType; 
+  onDeleteProduct: () => void; 
 }
 
 const DeleteAlertDialog: React.FC<DeleteProductDialogProps> = ({

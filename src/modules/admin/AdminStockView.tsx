@@ -32,16 +32,14 @@ const AdminStockView = () => {
      <div className="flex items-center justify-between mb-3">
         <h1 className="text-3xl font-semibold">Stocks</h1>
    
-        
-
-         <AddProductDialog />
+         <AddProductDialog refetch={refetch} />
      
      
       </div>
 
       <div className="container mx-auto py-3">
         <DataTable
-          columns={columns}
+          columns={columns(refetch)}
           data={Data}
           page={page}
           pageSize={pageSize}
