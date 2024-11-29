@@ -47,6 +47,8 @@ const ManagerView = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
     endDate,
   ]);
 
+  console.log("THis is the data",data)
+
   const ProductOrderData = useMemo(
     (): ProductOrderWithPaginationResDTO<GetAllOrderWithProductModel> => {
       const defaultData: ProductOrderWithPaginationResDTO<GetAllOrderWithProductModel> = {

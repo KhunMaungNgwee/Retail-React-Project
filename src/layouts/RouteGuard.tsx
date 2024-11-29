@@ -11,7 +11,7 @@ const RouteGuard = ({allowedRoles, children}: {allowedRoles: string[], children:
 	}
 
 	if(allowedRoles.includes(userRole || 'user')) {
-		return <div>{children}<Outlet /></div>
+		return <div>{children}</div>
 	} else {
 		navigate('/', {replace: true})
 	}

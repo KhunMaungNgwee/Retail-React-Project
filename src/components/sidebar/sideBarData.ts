@@ -3,7 +3,7 @@ import {
   RocketIcon,
   ViewGridIcon,
 } from "@radix-ui/react-icons";
-import { LogOut, Settings2Icon } from "lucide-react";
+import { Settings2Icon } from "lucide-react";
 
 // Sidebar data with role-based access control
 export const sidebarData = [

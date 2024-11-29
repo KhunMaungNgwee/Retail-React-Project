@@ -16,11 +16,11 @@ const StockView = () => {
   const totalCartItems = useAppSelector((state) =>
     state.cart.cart.reduce((total, item) => total + item.quantity, 0)
   );
-  console.log(" Page" + data?.page);
+  console.log( data);
 
-  useEffect(() => {
-    console.log(data);
-  }, [totalCartItems, data]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [totalCartItems, data]);
 
   const Data = useMemo(() => {
     return isFetching ? [] : data?.items || [];
