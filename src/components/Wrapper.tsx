@@ -17,7 +17,6 @@ import AuthLayout from "@/layouts/AuthLayout";
 import LoginView from "@/modules/auth/login/LoginView";
 import Register from "@/modules/auth/register/Register";
 import AdminStockView from "@/modules/admin/AdminStockView";
-import { LogoutDialog } from "./dialog";
 import RouteGuard from "@/layouts/RouteGuard";
 
 
@@ -45,17 +44,12 @@ const router = createBrowserRouter([
 				},
 				{
 					path:'register',
-					element:<Register />
+					element:<RouteGuard allowedRoles={['admin']}><Register /></RouteGuard>
 				},
 				{
 					path:'admin',
 					element: <RouteGuard allowedRoles={['admin']}><AdminStockView /></RouteGuard>
 				},
-				{
-					path: "/logout",
-					element: <LogoutDialog children={''} />,
-				},
-				
 			],
 
 

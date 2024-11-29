@@ -1,64 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { toast } from "@/hooks/use-toast";
+import { addNewProduct } from "@/api/product/index";
+import { hideLoader, openLoader } from "@/store/features/loaderSlice";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { useQueryClient } from "@tanstack/react-query";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { AddProductModel } from "@/api/product/types";
 
-import { toast } from '@/hooks/use-toast';
-import { addNewProduct } from '@/api/product/index';
 
 
-import { hideLoader, openLoader } from '@/store/features/loaderSlice';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
-import { useQueryClient } from '@tanstack/react-query';
-
-interface AddProductModel {
-  productName: string;
-  sellingPrice: number;
-  stock: number;
-  profitPerItem: number;
-}
-interface AddProductDialogProps {
-    refetch: () => void; // Add refetch as a prop
-  }
-const AddProductDialog : React.FC<AddProductDialogProps> = ({ refetch }) =>{
-  const [isOpen, setIsOpen] = useState(false); // State for controlling dialog visibility
+const AddProductDialog = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [payload, setPayload] = useState<AddProductModel>({
-    productName: '',
+    productName: "",
     sellingPrice: 0,
     stock: 0,
     profitPerItem: 0,
   });
 
   const initialPayload = {
-    productName: '',
+    productName: "",
     sellingPrice: 0,
     stock: 0,
     profitPerItem: 0,
   };
 
-
-  const queryClient = useQueryClient()
-
+  const queryClient = useQueryClient();
 
   const { mutate: addProduct } = addNewProduct.useMutation({
     onMutate: () => openLoader(),
     onSuccess: async () => {
-            await queryClient.invalidateQueries({
-              queryKey: ["getAllProductsWithPagination"],
-            });
-        toast({
-            title: ('Add Success'),
-            description: ('Product'),
-        })
+      await queryClient.invalidateQueries({
+        queryKey: ["getAllProductsWithPagination"],
+      });
+      toast({
+        title: "Add Success",
+        description: "Product",
+      });
       setPayload(initialPayload);
-     
-      setIsOpen(false); 
-        
+
+      setIsOpen(false);
     },
     onError: (error: any) => {
-      console.error('Error', error);
+      console.error("Error", error);
       toast({
-        title: ('error-msg.error'),
-        description: ('error-msg.error'),
-        variant: 'destructive'
-    })
+        title: "error-msg.error",
+        description: "error-msg.error",
+        variant: "destructive",
+      });
     },
     onSettled: () => hideLoader(),
   });
@@ -82,92 +81,87 @@ const AddProductDialog : React.FC<AddProductDialogProps> = ({ refetch }) =>{
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <button
-          onClick={() => setIsOpen(true)}
-          className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
+        <Button variant="outline" onClick={() => setIsOpen(true)}>
           Add New Product
-        </button>
+        </Button>
       </DialogTrigger>
 
-      <DialogContent className="p-8 rounded border border-gray-200 max-w-sm mx-auto">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add New Product</DialogTitle>
+          <DialogDescription>
+            Fill in the details for the new product. Click save when you're
+            done.
+          </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit}>
-          {/* Product Name Input */}
-          <div className="mb-4">
-            <label htmlFor="productName" className="text-sm text-gray-700 block mb-1 font-medium">Product Name</label>
-            <input
-              type="text"
+        <div className="grid gap-4 py-4">
+          {/* Product Name */}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="productName" className="text-right">
+              Product Name
+            </Label>
+            <Input
               id="productName"
               name="productName"
               value={payload.productName}
               onChange={handleChange}
-              className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
-              placeholder="Enter product name"
+              className="col-span-3"
             />
           </div>
 
-          {/* Selling Price Input */}
-          <div className="mb-4">
-            <label htmlFor="sellingPrice" className="text-sm text-gray-700 block mb-1 font-medium">Selling Price</label>
-            <input
-              type="number"
+          {/* Selling Price */}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="sellingPrice" className="text-right">
+              Selling Price
+            </Label>
+            <Input
               id="sellingPrice"
+              type="number"
               name="sellingPrice"
               value={payload.sellingPrice}
               onChange={handleChange}
-              className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
-              placeholder="Enter selling price"
+              className="col-span-3"
             />
           </div>
 
-          {/* Stock Input */}
-          <div className="mb-4">
-            <label htmlFor="stock" className="text-sm text-gray-700 block mb-1 font-medium">Stock</label>
-            <input
-              type="number"
+          {/* Stock */}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="stock" className="text-right">
+              Stock
+            </Label>
+            <Input
               id="stock"
+              type="number"
               name="stock"
               value={payload.stock}
               onChange={handleChange}
-              className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
-              placeholder="Enter stock quantity"
+              className="col-span-3"
             />
           </div>
 
-          {/* Profit Per Item Input */}
-          <div className="mb-4">
-            <label htmlFor="profitPerItem" className="text-sm text-gray-700 block mb-1 font-medium">Profit Per Item</label>
-            <input
-              type="number"
+          {/* Profit Per Item */}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="profitPerItem" className="text-right">
+              Profit Per Item
+            </Label>
+            <Input
               id="profitPerItem"
+              type="number"
               name="profitPerItem"
               value={payload.profitPerItem}
               onChange={handleChange}
-              className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
-              placeholder="Enter profit per item"
+              className="col-span-3"
             />
           </div>
+        </div>
 
-          <DialogFooter>
-            <button
-              type="submit"
-              className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100"
-            >
-              Cancel
-            </button>
-          </DialogFooter>
-        </form>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setIsOpen(false)}>
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit}>Save</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

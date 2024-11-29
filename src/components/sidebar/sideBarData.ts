@@ -3,7 +3,7 @@ import {
   RocketIcon,
   ViewGridIcon,
 } from "@radix-ui/react-icons";
-import { Settings2Icon } from "lucide-react";
+import { PlusCircle, Settings2Icon } from "lucide-react";
 
 // Sidebar data with role-based access control
 export const sidebarData = [
@@ -35,11 +35,11 @@ export const sidebarData = [
     subMenu: null,
     roles: ["admin"], // Accessible to admin only
   },
-  // {
-  //   routerNames: ["/logout"],
-  //   name: "Log Out",
-  //   icon: LogOut,
-  //   subMenu: null,
-  //   roles: ["admin", "manager", "user"], // Accessible to all roles
-  // },
+  {
+    routerNames: ["/register"],
+    name: "Add User",
+    icon: PlusCircle ,
+    subMenu: null,
+    roles: ["admin"],
+  },
 ];

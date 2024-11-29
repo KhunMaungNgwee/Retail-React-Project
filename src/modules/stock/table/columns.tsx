@@ -49,7 +49,7 @@ export const columns: ColumnDef<ProductType>[] = [
           productID: row.original.productID,
           productName: row.original.productName,
           sellingPrice: row.original.sellingPrice,
-          quantity: 1, 
+          quantity: 1,
           stock: row.original.stock,
           profitPerItem: row.original.profitPerItem,
         };
@@ -60,25 +60,23 @@ export const columns: ColumnDef<ProductType>[] = [
       };
 
       return (
-        
-          <div className="flex justify-center items-center space-x-4">
-            <Button
-              onClick={() => DecreateItem()}
-              className="text-center bg-red-500 text-white py-1 px-4 rounded-lg hover:bg-red-700 transition"
-            >
-              <AiOutlineShoppingCart className="w-5 h-5" />
-              <AiOutlineMinusCircle className="w-5 h-5" />
-            </Button>
-            <Button
-              onClick={() => IncreateItem()}
-              className=" bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-700 transition"
-            >
-              <AiOutlineShoppingCart className="w-5 h-5" />
-              <AiOutlinePlusCircle className="w-5 h-5" />
-            </Button>
-          </div>
+        <div className="flex justify-center items-center space-x-4">
+          <Button
+            onClick={() => DecreateItem()}
+            className="text-center bg-red-500 text-white py-1 px-4 rounded-lg hover:bg-red-700 transition"
+          >
+            <AiOutlineShoppingCart className="w-5 h-5" />
+            <AiOutlineMinusCircle className="w-5 h-5" />
+          </Button>
+          <Button
+            onClick={() => IncreateItem()}
+            className=" bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-700 transition"
+          >
+            <AiOutlineShoppingCart className="w-5 h-5" />
+            <AiOutlinePlusCircle className="w-5 h-5" />
+          </Button>
+        </div>
       );
     },
   },
-  
 ];

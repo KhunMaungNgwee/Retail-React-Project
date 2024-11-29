@@ -20,8 +20,11 @@ const Sidebar = () => {
   // Dynamically filter sidebar data based on user role
   const filteredSidebarData = useMemo(() => {
     return sidebarData.filter((item) => {
-      // Exclude "/admin" route if the user is not an admin
-      if (item.routerNames.includes("/admin") && userRole !== "admin") {
+      // Exclude "/admin" and "/register" routes if the user is not an admin
+      if (
+        (item.routerNames.includes("/admin") && userRole !== "admin") ||
+        (item.routerNames.includes("/register") && userRole !== "admin")
+      ) {
         return false;
       }
       return true;

@@ -1,5 +1,5 @@
 import  useAuth  from "@/hooks/useAuth"
-import { Outlet, useNavigate } from "react-router-dom"
+import {  useNavigate } from "react-router-dom"
 
 const RouteGuard = ({allowedRoles, children}: {allowedRoles: string[], children: React.ReactNode}) => {
 	const navigate = useNavigate()
@@ -15,10 +15,7 @@ const RouteGuard = ({allowedRoles, children}: {allowedRoles: string[], children:
 	} else {
 		navigate('/', {replace: true})
 	}
-
 	return <div>{children}</div>
-
-
 }
 
 export default RouteGuard

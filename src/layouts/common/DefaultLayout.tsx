@@ -5,10 +5,10 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 const DefaultLayout = () => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
-  // return !isAuthenticated ? (
-  //   <Navigate to={"/auth/login"} state={{ from: location }} replace />
-  // ) :
-  return (
+  return !isAuthenticated ? (
+    <Navigate to={"/auth/login"} state={{ from: location }} replace />
+  ) :(
+  
     <div className="flex h-screen bg-gray-200 overflow-hidden">
       <aside className="w-3/12 bg-gray-800 text-white h-screen fixed lg:static lg:flex">
         <Sidebar />

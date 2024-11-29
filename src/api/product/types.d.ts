@@ -10,7 +10,7 @@ export type ProductType = {
 export type ProductPaginationType = {
   items: Product[];
   page: number;
-  pagesize: number;
+  pageSize: number;
   totalCount: number;
   totalPages: number;
 };
