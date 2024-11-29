@@ -6,24 +6,30 @@ import { ProductType } from "@/api/product/types";
 import React from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import { hideLoader, openLoader } from "@/store/features/loaderSlice";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface DeleteProductDialogProps {
   item: ProductType; 
-  onDeleteProduct: () => void; 
+ 
 }
 
 const DeleteAlertDialog: React.FC<DeleteProductDialogProps> = ({
   item,
-  onDeleteProduct,
+  
 }) => {
+  const queryClient = useQueryClient()
   const { mutate: deletePro } = deleteProduct.useMutation({
     onMutate: () => openLoader(),
-    onSuccess: () => {
+   
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ["getAllProductsWithPagination"],
+        });
       toast({
         title: "Delete Success",
         description: "Product deleted successfully",
       });
-      onDeleteProduct();
+     
  
     },
     onError: (error) => {

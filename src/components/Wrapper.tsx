@@ -17,40 +17,49 @@ import AuthLayout from "@/layouts/AuthLayout";
 import LoginView from "@/modules/auth/login/LoginView";
 import Register from "@/modules/auth/register/Register";
 import AdminStockView from "@/modules/admin/AdminStockView";
+import { LogoutDialog } from "./dialog";
+import RouteGuard from "@/layouts/RouteGuard";
 
 
 const router = createBrowserRouter([
 	{
-		path:"/",
-		element:<DefaultLayout/>,
-		children:[
-			{
-				path:'',
-				element:<StockView/>
-			},
-			{
-				path:'/stock-page',
-				element: <StockView/>
-			},
-			{
-				path:'/cart-page',
-				element: <CartView/>
-			},
-			{
-				path:'manager-page',
-				element: <ManagerView/>
-			},
-			{
-				path:'register',
-				element:<Register />
-			},
-			{
-				path:'admin',
-				element:<AdminStockView />
-			},
-			
-			
-		],
+		path: "/",
+		element: <RouteGuard allowedRoles={['admin', 'user']}><DefaultLayout /></RouteGuard>,
+		children: [
+	
+				{
+					path:'',
+					element:<StockView/>
+				},
+				{
+					path:'/stock-page',
+					element: <StockView/>
+				},
+				{
+					path:'/cart-page',
+					element: <CartView/>
+				},
+				{
+					path:'manager-page',
+					element: <ManagerView/>
+				},
+				{
+					path:'register',
+					element:<Register />
+				},
+				{
+					path:'admin',
+					element: <RouteGuard allowedRoles={['admin']}><AdminStockView /></RouteGuard>
+				},
+				{
+					path: "/logout",
+					element: <LogoutDialog children={''} />,
+				},
+				
+			],
+
+
+		
 	},
 	{
 		path:"auth",
@@ -70,6 +79,7 @@ const router = createBrowserRouter([
 		path: "*",
 		element: <NotFoundView />,
 	},
+	
 	
 	
 	

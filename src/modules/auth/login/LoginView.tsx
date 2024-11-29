@@ -88,19 +88,11 @@ const LoginView = () => {
 		<div className="login-container">
 			<div className="absolute top-0 left-0 z-10 flex items-center justify-center w-full h-screen bg-transparent">
 				<div className="w-[90vw] p-6 md:p-10 md:px-12 gap-1 bg-white flex flex-col items-center rounded-lg shadow-lg max-w-[480px]">
-					<img
-						src={ReactIcon}
-						alt="React Logo"
-						className="w-12 h-12"
-						loading="lazy"
-					/>
-					<p className="text-[10px] leading-[0.5rem] text-gray-400 font-semibold tracking-normal pb-4">
-						<span className="text-primary">FUSION </span>
-						SOLUTION
-					</p>
+					
+					
 
 					<h3 className="md:text-3xl leading-[0.8] text-2xl font-medium tracking-tighter text-center">
-						Welcome Back
+						Hello Welcome 
 					</h3>
 
 					<p className="text-xs text-center text-gray-400">
@@ -159,12 +151,7 @@ const LoginView = () => {
 						</form>
 					</Form>
 
-					<p className="py-1 text-xs text-center">
-						Don't have an account?{" "}
-						<span className="hover:underline active:underline text-primary font-medium cursor-pointer">
-							Sign up for free
-						</span>
-					</p>
+					
 				</div>
 			</div>
 

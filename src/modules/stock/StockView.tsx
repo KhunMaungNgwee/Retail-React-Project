@@ -47,7 +47,7 @@ const StockView = () => {
                   data-original="#000000"
                 ></path>
               </svg>
-              <span className="absolute left-auto -ml-1 top-0 rounded-full bg-red-500 px-1 py-0 text-xs text-white">
+              <span className="absolute left-auto upd-ml-1 top-0 rounded-full bg-red-500 px-1 py-0 text-xs text-white">
                 {totalCartItems}
               </span>
             </span>

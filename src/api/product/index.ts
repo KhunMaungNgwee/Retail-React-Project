@@ -1,7 +1,9 @@
 import {
+  QueryClient,
   useMutation,
   UseMutationOptions,
   useQuery,
+  useQueryClient,
   UseQueryOptions,
 } from "@tanstack/react-query";
 import {
@@ -33,7 +35,8 @@ export const getAllProductsWithPagination = {
     opt?: UseQueryOptions<ProductPaginationType, Error>
   ) => {
     return useQuery<ProductPaginationType, Error>({
-      queryKey,
+     
+      queryKey:['getAllProductsWithPagination'],
       enabled: !!queryKey,
       queryFn: async () => {
         const [page, pageSize] = queryKey;
@@ -47,13 +50,20 @@ export const getAllProductsWithPagination = {
 };
 
 export const addNewProduct = {
-  useMutation: (opt?: UseMutationOptions<any, Error, AddProductModel, any>) =>
-    useMutation({
+  useMutation: (opt?: UseMutationOptions<any, Error, AddProductModel, any>) => {
+    const queryClient = useQueryClient();
+    return useMutation({
       mutationKey: ["AddProduct"],
       mutationFn: (payload: AddProductModel) =>
         productService.AddProduct(payload),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ["getAllProductsWithPagination"],
+        });
+      },
       ...opt,
-    }),
+    });
+  },
 };
 export const deleteProduct = {
   useMutation: (opt?: UseMutationOptions<any, Error, string, any>) =>

@@ -6,7 +6,7 @@ import { UpdateProductDialog } from "@/components/dialog";
 import DeleteAlertDialog from "@/components/dialog/DeleteAlertDialog";
 
 
-export const columns= (refetch: () => void): ColumnDef<ProductType>[] => [
+export const columns: ColumnDef<ProductType>[] = [
   {
     accessorKey: "productName",
     header: "Product Name",
@@ -32,10 +32,10 @@ export const columns= (refetch: () => void): ColumnDef<ProductType>[] => [
         <div className="flex justify-center items-center space-x-4">
           <UpdateProductDialog 
             item={row.original}
-            onProductUpdated={refetch}
+            
           />
    
-          <DeleteAlertDialog item={row.original} onDeleteProduct={refetch} />
+          <DeleteAlertDialog item={row.original} />
         </div>
       );
     },

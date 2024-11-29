@@ -22,33 +22,48 @@ const cartSlice = createSlice({
       if (existingItem) {
         existingItem.quantity += item.quantity;
       } else {
-        state.cart.push(item);
+        // Use the spread operator to add the new item to the cart array immutably
+        state.cart = [...state.cart, item];
       }
     },
+    
     removeFromCart(state, action: PayloadAction<string>) {
       const productID = action.payload;
-
-      const existingItem = state.cart.find(
+    
+      const existingItemIndex = state.cart.findIndex(
         (item) => item.productID === productID
       );
-
-      if (existingItem) {
+    
+      if (existingItemIndex !== -1) {
+        const existingItem = state.cart[existingItemIndex];
         if (existingItem.quantity > 1) {
-          existingItem.quantity -= 1;
+          // Decrease the quantity immutably
+          state.cart = [
+            ...state.cart.slice(0, existingItemIndex),
+            { ...existingItem, quantity: existingItem.quantity - 1 },
+            ...state.cart.slice(existingItemIndex + 1),
+          ];
         } else {
-          state.cart = state.cart.filter(
-            (item) => item.productID !== productID
-          );
+          // Remove the item immutably
+          state.cart = [
+            ...state.cart.slice(0, existingItemIndex),
+            ...state.cart.slice(existingItemIndex + 1),
+          ];
         }
       }
     },
+    
     RemoveItem(state, action: PayloadAction<string>) {
       const productID = action.payload;
+      // Use filter to immutably remove the item
       state.cart = state.cart.filter((item) => item.productID !== productID);
     },
+    
     clearCart(state) {
-      state.cart = []; // Clear all items in the cart
-    },
+      // Clear all items immutably by resetting to an empty array
+      state.cart = [];
+    }
+    
     
   },
 });

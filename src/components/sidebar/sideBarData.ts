@@ -35,11 +35,11 @@ export const sidebarData = [
     subMenu: null,
     roles: ["admin"], // Accessible to admin only
   },
-  {
-    routerNames: ["/logout"],
-    name: "Log Out",
-    icon: LogOut,
-    subMenu: null,
-    roles: ["admin", "manager", "user"], // Accessible to all roles
-  },
+  // {
+  //   routerNames: ["/logout"],
+  //   name: "Log Out",
+  //   icon: LogOut,
+  //   subMenu: null,
+  //   roles: ["admin", "manager", "user"], // Accessible to all roles
+  // },
 ];

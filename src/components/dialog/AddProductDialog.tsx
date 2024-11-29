@@ -6,6 +6,7 @@ import { addNewProduct } from '@/api/product/index';
 
 import { hideLoader, openLoader } from '@/store/features/loaderSlice';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface AddProductModel {
   productName: string;
@@ -33,11 +34,15 @@ const AddProductDialog : React.FC<AddProductDialogProps> = ({ refetch }) =>{
   };
 
 
+  const queryClient = useQueryClient()
 
 
   const { mutate: addProduct } = addNewProduct.useMutation({
     onMutate: () => openLoader(),
-    onSuccess: () => {
+    onSuccess: async () => {
+            await queryClient.invalidateQueries({
+              queryKey: ["getAllProductsWithPagination"],
+            });
         toast({
             title: ('Add Success'),
             description: ('Product'),
@@ -45,7 +50,7 @@ const AddProductDialog : React.FC<AddProductDialogProps> = ({ refetch }) =>{
       setPayload(initialPayload);
      
       setIsOpen(false); 
-      refetch();
+        
     },
     onError: (error: any) => {
       console.error('Error', error);

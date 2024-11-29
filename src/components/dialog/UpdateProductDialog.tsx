@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {  getAllProduct, updateProduct } from "@/api/product/index";
+import React, {  useState } from "react";
+import {   updateProduct } from "@/api/product/index";
 import { ProductType, UpdateProductModel } from "@/api/product/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,13 +18,14 @@ import { toast } from "@/hooks/use-toast";
 
 import { hideLoader, openLoader } from "@/store/features/loaderSlice";
 import { AiOutlineEdit } from "react-icons/ai";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface EditableProductDialogProps {
   item: ProductType;
-  onProductUpdated: () => void;
+ 
 }
 
-const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item, onProductUpdated }) => {
+const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [editableProduct, setEditableProduct] = useState<UpdateProductModel>({
     productID: "",
@@ -33,18 +34,21 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item, onPro
     stock: 0,
     profitPerItem: 0,
   });
-
+  const queryClient = useQueryClient()
    
 
-  const {refetch} = getAllProduct.useQuery();
+
   const { mutate: updatePro } = updateProduct.useMutation({
       onMutate: () => openLoader(),
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ["getAllProductsWithPagination"],
+        });
         toast({
           title: "Update Success",
           description: "Product updated successfully",
         });
-        onProductUpdated(); // Notify parent about the update
+      
         
         setTimeout(() => setOpenDialog(false), 100); // Close dialog
       },
@@ -60,9 +64,7 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item, onPro
     }
   );
 
-  useEffect(()=>{
-    refetch()
-  })
+ 
   
 
   const openEditDialog = (product: UpdateProductModel) => {

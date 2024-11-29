@@ -39,7 +39,7 @@ const AdminStockView = () => {
 
       <div className="container mx-auto py-3">
         <DataTable
-          columns={columns(refetch)}
+          columns={columns}
           data={Data}
           page={page}
           pageSize={pageSize}
