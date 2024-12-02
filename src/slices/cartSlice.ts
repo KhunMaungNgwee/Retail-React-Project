@@ -15,17 +15,27 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action: PayloadAction<ProductType>) {
       const item = action.payload;
-      console.log("cart items", state.cart);
       const existingItem = state.cart.find(
         (cartItem) => cartItem.productID === item.productID
       );
+    
       if (existingItem) {
+        // Check if adding the new quantity exceeds the stock
+        if (existingItem.quantity + item.quantity > item.stock) {
+          window.alert(`Cannot add more than available stock. Stock: ${item.stock}`);
+          return; // Exit the reducer if adding exceeds stock
+        }
         existingItem.quantity += item.quantity;
       } else {
-        // Use the spread operator to add the new item to the cart array immutably
+        // Check if the new item can be added without exceeding stock
+        if (item.quantity > item.stock) {
+          window.alert(`Cannot add item. Stock: ${item.stock}`);
+          return; // Exit the reducer if initial quantity exceeds stock
+        }
         state.cart = [...state.cart, item];
       }
-    },
+    }
+,    
     
     removeFromCart(state, action: PayloadAction<string>) {
       const productID = action.payload;

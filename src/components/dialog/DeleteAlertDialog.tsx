@@ -1,9 +1,7 @@
 import { AiOutlineDelete } from "react-icons/ai";
-
 import { deleteProduct } from "@/api/product";
 import { toast } from "@/hooks/use-toast";
 import { ProductType } from "@/api/product/types";
-import React from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import { hideLoader, openLoader } from "@/store/features/loaderSlice";
 import { useQueryClient } from "@tanstack/react-query";
@@ -13,10 +11,7 @@ interface DeleteProductDialogProps {
  
 }
 
-const DeleteAlertDialog: React.FC<DeleteProductDialogProps> = ({
-  item,
-  
-}) => {
+const DeleteAlertDialog= ({item} :DeleteProductDialogProps) => {
   const queryClient = useQueryClient()
   const { mutate: deletePro } = deleteProduct.useMutation({
     onMutate: () => openLoader(),
@@ -45,9 +40,7 @@ const DeleteAlertDialog: React.FC<DeleteProductDialogProps> = ({
 
   const handleDelete = () => {
     deletePro(item.productID);
-  };
-
-
+  }
   return (
     <AlertDialog >
       <AlertDialogTrigger asChild>

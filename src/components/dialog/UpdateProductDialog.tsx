@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import  {  useState } from "react";
 import {   updateProduct } from "@/api/product/index";
 import { ProductType, UpdateProductModel } from "@/api/product/types";
 import { Button } from "@/components/ui/button";
@@ -14,18 +14,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
-
-
 import { hideLoader, openLoader } from "@/store/features/loaderSlice";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface EditableProductDialogProps {
   item: ProductType;
- 
 }
-
-const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => {
+const UpdateProductDialog= ({ item } : EditableProductDialogProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [editableProduct, setEditableProduct] = useState<UpdateProductModel>({
     productID: "",
@@ -36,8 +32,6 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => 
   });
   const queryClient = useQueryClient()
    
-
-
   const { mutate: updatePro } = updateProduct.useMutation({
       onMutate: () => openLoader(),
       onSuccess: async () => {
@@ -48,8 +42,6 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => 
           title: "Update Success",
           description: "Product updated successfully",
         });
-      
-        
         setTimeout(() => setOpenDialog(false), 100); // Close dialog
       },
       onError: (error: any) => {
@@ -63,10 +55,6 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => 
       onSettled: () => hideLoader(), // Turn off loader
     }
   );
-
- 
-  
-
   const openEditDialog = (product: UpdateProductModel) => {
     setEditableProduct({
       productID: product.productID,
@@ -77,20 +65,15 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => 
     });
     setOpenDialog(true);
   };
-
   const saveChanges = () => {
     updatePro(editableProduct);
   };
-
   return (
     <>
-      {/* Trigger button to open dialog */}
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger  asChild>
         <AiOutlineEdit onClick={() => openEditDialog(item)} />
-         
         </DialogTrigger>
-
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Edit Product</DialogTitle>
@@ -135,7 +118,6 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => 
                 className="col-span-3"
               />
             </div>
-
             {/* Stock */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="stock" className="text-right">
@@ -154,8 +136,6 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => 
                 className="col-span-3"
               />
             </div>
-
-            {/* Profit Per Item */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="profitPerItem" className="text-right">
                 Profit Per Item
@@ -174,7 +154,6 @@ const UpdateProductDialog: React.FC<EditableProductDialogProps> = ({ item }) => 
               />
             </div>
           </div>
-
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpenDialog(false)}>
               Cancel

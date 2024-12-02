@@ -1,4 +1,4 @@
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { sidebarData } from "./sideBarData";
 import useAuth from "@/hooks/useAuth"; // Import your custom hook for user authentication and role
@@ -44,7 +44,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-3/12 bg-[#211636] shadow-lg h-screen fixed top-0 left-0 min-w-[270px] py-6 px-4 font-[sans-serif] flex flex-col justify-between overflow-hidden hidden lg:block">
+    <aside className="w-3/12 bg-[#211636] shadow-lg h-screen fixed top-0 left-0 min-w-[270px] py-6 px-4 font-[sans-serif]  flex-col justify-between overflow-hidden hidden lg:block">
       {/* Top Section: User Info */}
       <div>
         <div className="flex flex-wrap items-center cursor-pointer">

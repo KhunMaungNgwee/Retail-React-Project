@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useState } from "react"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "@/hooks/use-toast"
 import { loginMutation } from "@/api/auth/queries"
 import  useBlockAnimation  from "@/hooks/useBlockAnimation"
 import  useAuth  from "@/hooks/useAuth"
@@ -31,7 +31,7 @@ const LoginView = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 
-	const { toast } = useToast()
+
 	const { blocks } = useBlockAnimation()
 	const { userLogin } = useAuth()
 
@@ -61,7 +61,7 @@ const LoginView = () => {
 					form.getValues().email
 				}`,
 				description: "Successful login",
-				variant: "success",
+				// variant: "success",
 			})
 		},
 		onError: (error) => {

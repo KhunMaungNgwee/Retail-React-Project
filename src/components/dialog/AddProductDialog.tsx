@@ -17,8 +17,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { AddProductModel } from "@/api/product/types";
 
-
-
 const AddProductDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [payload, setPayload] = useState<AddProductModel>({
