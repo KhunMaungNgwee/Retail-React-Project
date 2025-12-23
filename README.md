@@ -1,7 +1,7 @@
 # React + TypeScript + Vite
 
 This project is a **Retail Management System** built with **React, TypeScript, and Vite**.  
-It provides a simple frontend interface for managing products, stock, carts, users, and reports. The project uses HMR for development and includes ESLint rules for code quality.
+It provides a frontend interface for managing products, stock, carts, users, and reports. The project uses HMR for development and includes ESLint rules for code quality.
 
 Currently, two official plugins are available:
 
@@ -29,6 +29,18 @@ The system has two main roles:
 - Logout  
 
 > In the **Manager** section, all reports are visible, and you can **filter reports by specific dates**.
+
+---
+
+## Test User Credentials
+
+- **Admin**  
+  Email: `bobo@gmail.com`  
+  Password: `bobo1234`
+
+- **User**  
+  Email: `susu@gmail.com`  
+  Password: `susu1234`
 
 ---
 
