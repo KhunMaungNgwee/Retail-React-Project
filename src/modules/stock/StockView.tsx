@@ -2,10 +2,9 @@ import { useAppSelector } from "@/store";
 import api from "@/api";
 import { DataTable } from "@/components/data-table/DataTable";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { columns } from "./table/columns";
 import { NavLink } from "react-router-dom";
-import { AiFillAlert, AiOutlineShoppingCart } from "react-icons/ai";
+import {  AiOutlineShoppingCart } from "react-icons/ai";
 
 const StockView = () => {
   const [page, setPage] = useState(1);

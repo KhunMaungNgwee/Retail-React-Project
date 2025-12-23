@@ -12,7 +12,9 @@ export type ProductOrderPaginationType = {
     page: number;                  
     pageSize: number;               
     totalCount: number;           
-    totalPages: number;            
+    totalPages: number;  
+    totalRevenue: number;
+    totalProfit: number;          
   };
 
   export type GetAllOrderWithProductModel= {
@@ -27,7 +29,3 @@ export type ProductOrderPaginationType = {
     quantity:number;
   }
 
-  type ProductOrderWithPaginationResDTO<T> = ProductOrderPaginationType & {
-    totalRevenue: number;
-    totalProfit: number;
-  };

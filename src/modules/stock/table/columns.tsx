@@ -84,14 +84,14 @@ export const columns: ColumnDef<ProductType>[] = [
       return (
         <div className="flex justify-center items-center space-x-4">
           <Button
-            onClick={handleDecreateItem}
+            onClick={()=>handleDecreateItem()}
             className="text-center bg-red-500 text-white py-1 px-4 rounded-lg hover:bg-red-700 transition"
           >
             <AiOutlineShoppingCart className="w-5 h-5" />
             <AiOutlineMinusCircle className="w-5 h-5" />
           </Button>
           <Button
-            onClick={handleIncreateItem}
+            onClick={()=>handleIncreateItem()}
             className="bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-700 transition"
           >
             <AiOutlineShoppingCart className="w-5 h-5" />

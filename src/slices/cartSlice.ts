@@ -35,15 +35,13 @@ const cartSlice = createSlice({
         state.cart = [...state.cart, item];
       }
     }
-,    
-    
+,  
     removeFromCart(state, action: PayloadAction<string>) {
       const productID = action.payload;
     
       const existingItemIndex = state.cart.findIndex(
         (item) => item.productID === productID
       );
-    
       if (existingItemIndex !== -1) {
         const existingItem = state.cart[existingItemIndex];
         if (existingItem.quantity > 1) {
@@ -62,19 +60,15 @@ const cartSlice = createSlice({
         }
       }
     },
-    
     RemoveItem(state, action: PayloadAction<string>) {
       const productID = action.payload;
       // Use filter to immutably remove the item
       state.cart = state.cart.filter((item) => item.productID !== productID);
     },
-    
     clearCart(state) {
       // Clear all items immutably by resetting to an empty array
       state.cart = [];
     }
-    
-    
   },
 });
 

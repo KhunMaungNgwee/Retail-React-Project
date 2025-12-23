@@ -13,10 +13,7 @@ import { CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import api from "@/api";
 import { format } from "date-fns"; // Use date-fns for date formatting
-import {
-  GetAllOrderWithProductModel,
-  ProductOrderWithPaginationResDTO,
-} from "@/api/order/types";
+import { ProductOrderPaginationType } from "@/api/order/types";
 
 const ManagerView = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
   const [page, SetPage] = useState(1);
@@ -40,27 +37,20 @@ const ManagerView = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
     }
   }, [date]);
 
-  const { data } = api.order.fetchAllProductOrder.useQuery([
-    page,
-    pageSize,
-    startDate,
-    endDate,
-  ]);
+  const { data } = api.order.fetchAllProductOrder.useQuery([page,pageSize,startDate,endDate,]);
 
-  const ProductOrderData =
-    useMemo((): ProductOrderWithPaginationResDTO<GetAllOrderWithProductModel> => {
-      const defaultData: ProductOrderWithPaginationResDTO<GetAllOrderWithProductModel> =
-        {
-          items: [],
-          totalPages: 1,
-          totalCount: 0,
-          page: 1,
-          pageSize: 10,
-          totalRevenue: 0,
-          totalProfit: 0,
-        };
-      return { ...defaultData, ...data };
-    }, [data]);
+  const ProductOrderData = useMemo(() => {
+    const defaultData: ProductOrderPaginationType = {
+      items: [],
+      totalPages: 1,
+      totalCount: 0,
+      page: 1,
+      pageSize: 10,
+      totalRevenue: 0,
+      totalProfit: 0,
+    };
+    return { ...defaultData, ...data };
+  }, [data]);
 
   const totalRevenue = useMemo(
     () => ProductOrderData.totalRevenue,
